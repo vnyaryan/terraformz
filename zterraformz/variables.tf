@@ -4,15 +4,20 @@ variable "keyvaultname" {
     
 	
 }
-variable "rgname" {
-    type = string
    
    
-}
 
 variable "rglocation" {
     type = string
    
    
 }
+
+
+variable "resource_group_name" {
+    type = string
+
+
+}
+
 

@@ -18,20 +18,37 @@ provider "azurerm" {
 
 
 
-resource "azurerm_resource_group" "resgroup" {
-  name     = var.rgname
-  location = var.rglocation
+
+
+module "bes_resourcegroup" {
+  source =  "/root/terraformz/zterraformz/modules/resourcegroup"
+  
+  resource_group_name = var.resource_group_name
+  resource_group_location = "westus2" 
+
+} 
+
+
+module "bes_resourcegroup_wait_40_seconds"{
+  source = "/root/terraformz/zterraformz/modules/helper/timer"
+  
+   dependency = module.bes_resourcegroup.resource_group_name
+   #dependency = var.resource_group_name
+   wait_in_seconds     = "40"
 }
+
+
+
 
 data "azurerm_client_config" "current" {}
 
 module "keyvault" {
- depends_on  = [azurerm_resource_group.resgroup]  
+ depends_on  = [module.bes_resourcegroup.id]
  source =  "/root/terraformz/zterraformz/modules/keyvault"
 
  kvname = var.keyvaultname
  kvlocation  = var.rglocation
- kvrgname  = var.rgname
+ kvrgname  = module.bes_resourcegroup_wait_40_seconds.dependency
  tenantid = data.azurerm_client_config.current.tenant_id
  objectid = data.azurerm_client_config.current.object_id
 
