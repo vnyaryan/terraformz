@@ -54,3 +54,61 @@ module "keyvault" {
 
 }
 
+
+
+module "storage" {
+ depends_on  = [module.keyvault]
+ source =  "/root/zterraformz/modules/storageaccount"
+
+ straccount_name     = var.storage_account_name
+ strlocation         = var.rglocation
+ strresource_group   = module.bes_resourcegroup_wait_40_seconds.dependency
+ straccount_tier     = var.storage_account_tier
+ strreplication_type = var.storage_replication_type
+
+}
+
+
+module "vnet" {
+ depends_on  = [module.storage]
+ source =  "/root/zterraformz/modules/virtualnetwork"
+
+ vnet_name                = var.virtual_network_name
+ vnet_address_space       = var.virtual_network_address_space
+ vnet_location            = var.rglocation
+ vnet_resource_group_name = module.bes_resourcegroup_wait_40_seconds.dependency
+ 
+
+}
+
+
+module "vnetsubnet" {
+ depends_on  = [module.vnet]
+ source =  "/root/zterraformz/modules/vnetsubnet"
+
+ subnet_name                      = var.subnet_name
+ subnet_resource_group_name       = module.bes_resourcegroup_wait_40_seconds.dependency
+ subnet_vnet_name                 = var.virtual_network_name
+ address_prefixes                 = var.address_prefixes
+
+
+}
+
+
+
+
+module "acr" {
+ depends_on  = [module.vnetsubnet]
+ source =  "/root/zterraformz/modules/acr"
+
+ acr_name                      = var.acr_name
+ acr_resource_group_name       = module.bes_resourcegroup_wait_40_seconds.dependency
+ acr_location                  = var.rglocation
+ acr_sku                       = var.acr_sku_value
+
+
+}
+
+
+
+
