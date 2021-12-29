@@ -90,3 +90,41 @@ variable "acr_sku_value" {
 
 
 
+
+variable "log_analytics_workspace_name" {
+
+   type = string
+
+ }
+
+
+
+
+variable "log_analytics_workspace_name_sku" {
+   type = string
+
+ }
+
+
+
+
+
+variable "public_ip_name" {
+  type = string
+   
+
+}
+
+
+ variable "public_ip_allocation_method" {
+   type = string
+
+}
+
+variable "public_ip_sku" {
+   type = string
+
+}
+
+
+
