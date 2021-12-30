@@ -156,3 +156,71 @@ module "publicip" {
 
 
 
+module "user_assigned_identity" {
+ depends_on  = [module.publicip]
+ source =  "/root/terraformz/zterraformz/modules/identity"
+
+ user_assigned_identity_name                     =  var.user_assigned_identity_name
+ user_assigned_identity_resource_group_name      =  module.resourcegroup.resource_group_name
+ user_assigned_identity_resource_group_location  =  module.resourcegroup.resource_group_location
+ 
+
+}
+
+
+
+
+module "azureadgroup" {
+  depends_on  = [module.user_assigned_identity]
+  source =  "/root/terraformz/zterraformz/modules/adgroup"
+
+  az_admin_display_name       = var.az_admin_display_name
+  az_admin_mail_enabled       = var.az_admin_mail_enabled
+  az_admin_mail_nickname      = var.az_admin_mail_nickname
+  az_admin_security_enabled   = var.az_admin_security_enabled
+
+}
+
+
+
+/*
+
+module "role_assignment" {
+ depends_on  = [module.user_assigned_identity]
+ source =  "/root/terraformz/zterraformz/modules/roleassignment"
+
+ scopeid                     =  module.resourcegroup.resource_group_id
+ role_definition_name        =  var.role_definition_name
+ principal_id                =  module.user_assigned_identity.principal_id
+
+
+}
+
+
+*/
+
+module "aks" {
+ depends_on  = [module.publicip]
+ source =  "/root/terraformz/zterraformz/modules/aks"
+
+ aks_name                        =  var.aks_name
+ resource_group_location         =  module.resourcegroup.resource_group_location
+ resource_group_name             =  module.resourcegroup.resource_group_name
+ node_resource_group             =  var.node_resource_group
+ aks_dns_prefix                  =  var.aks_dns_prefix
+ aks_vm_size                     =  var.aks_vm_size
+ aks_os_disk_size_gb             =  var.aks_os_disk_size_gb
+ aks_availability_zones          =  var.aks_availability_zones
+ aks_auto_scaling                =  var.aks_auto_scaling
+ aks_min_count                   =  var.aks_min_count
+ aks_max_count                   =  var.aks_max_count
+ aks_vnet_subnet_id              =  module.vnetsubnet.subnet_id
+ aks_admin_group_object_ids      =  [module.azureadgroup.azadmin]
+ aks_outbound_ip_address_ids     =  [module.publicip.publicip_id]
+ aks_log_analytics_workspace_id  =  module.loganalytics.id
+
+}
+
+
+
+

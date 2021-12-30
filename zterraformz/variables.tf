@@ -128,3 +128,103 @@ variable "public_ip_sku" {
 
 
 
+
+variable "user_assigned_identity_name" {
+  type = string
+
+
+}
+
+variable "role_definition_name" {
+    type = string
+
+
+}
+
+
+variable "az_admin_display_name" {
+    type = string
+
+
+}
+
+variable "az_admin_mail_enabled" {
+    type = string
+
+}
+
+variable "az_admin_mail_nickname" {
+    type = string
+
+}
+
+
+variable "az_admin_security_enabled" {
+    type = string
+
+}
+
+
+variable "aks_name" {
+    type = string
+
+
+}
+
+
+variable "aks_dns_prefix" {
+   type = string
+
+}
+
+variable "node_resource_group" {
+   type = string
+
+}
+
+
+variable "aks_vm_size" {
+   type = string
+
+}
+
+
+
+variable "aks_os_disk_size_gb" {
+   type = string
+
+}
+
+
+
+variable "aks_availability_zones" {
+   type = list
+
+}
+
+
+
+
+variable "aks_auto_scaling" {
+   type = string
+
+}
+
+
+
+variable "aks_min_count" {
+   type = string
+
+}
+
+variable "aks_max_count" {
+   type = string
+
+}
+
+
+
+
+
+
+
