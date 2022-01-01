@@ -223,4 +223,26 @@ module "aks" {
 
 
 
+module "postgresql" {
+ depends_on  = [module.aks]
+ source =  "/root/terraformz/zterraformz/modules/postgresql"
 
+ postgresql_name                        		=  var.postgresql_name
+ postgresql_location                    		=  module.resourcegroup.resource_group_location
+ resource_group_name                    		=  module.resourcegroup.resource_group_name
+ postgresql_username                    		=  var.postgresql_username
+ postgresql_password                    		=  var.postgresql_password
+ postgresql_sku                         		=  var.postgresql_sku
+ postgresql_version                     		=  var.postgresql_version
+ postgresql_storage_mb                  		=  var.postgresql_storage_mb
+ postgresql_backup_retention_days       		=  var.postgresql_backup_retention_days
+ postgresql_geo_redundant_backup_enabled    	=  var.postgresql_geo_redundant_backup_enabled
+ postgresql_auto_grow_enabled                   =  var.postgresql_auto_grow_enabled
+ postgresql_public_network_access_enabled       =  var.postgresql_public_network_access_enabled
+ postgresql_ssl_enforcement_enabled             =  var.postgresql_ssl_enforcement_enabled
+ postgresql_ssl_minimal_tls_version_enforced    =  var.postgresql_ssl_minimal_tls_version_enforced 
+ 
+
+
+}
+ 
