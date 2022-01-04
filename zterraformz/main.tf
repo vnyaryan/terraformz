@@ -79,7 +79,7 @@ module "vnet" {
  vnet_address_space       = var.virtual_network_address_space
  vnet_location            = module.resourcegroup.resource_group_location
  vnet_resource_group_name = module.resourcegroup.resource_group_name
-
+ enforce_private_link_endpoint_network_policies = var.enforce_private_link_endpoint_network_policies
 
 }
 
