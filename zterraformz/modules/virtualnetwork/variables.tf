@@ -21,4 +21,8 @@ variable "vnet_resource_group_name" {
 
 }
 
+variable "enforce_private_link_endpoint_network_policies" {
+    type = string
+
+}
 
