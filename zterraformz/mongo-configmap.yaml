@@ -4,3 +4,5 @@ metadata:
   name: mongodb-configmap
 data:
   database_url: mongodb-service
+  mongo-root-username: dXNlcm5hbWU=
+  mongo-root-password: cGFzc3dvcmQ=
